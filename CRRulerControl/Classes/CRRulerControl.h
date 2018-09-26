@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CRRulerLayer.h"
 
+@protocol CRRulerControlDelegate<NSObject, UIScrollViewDelegate>
+
+@end
+
 /**
  *   Customise ruler. Have action rulerValueChaned. Can change color and size all elements.
  */
@@ -62,6 +66,7 @@ typedef NS_OPTIONS(NSUInteger, CRRulerMarkType) {
  *  Value on center of CRRulerControl. Thay variable by proterty rangeFrom and rangeLength default 0
  */
 @property (nonatomic) IBInspectable CGFloat value;
+@property (nonatomic, weak) id<CRRulerControlDelegate> delegate;
 
 /**
  *  Change value with animation or without it

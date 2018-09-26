@@ -8,7 +8,6 @@
 
 #import "CRRulerLayer.h"
 
-static const CGFloat kScreenSeparatorPositionToTextAndLines = 0.66;
 static const CGFloat kDefaultFrequencyForMajorMark = 10;
 static const CGFloat kDefaultFrequencyForMiddleMark = 5;
 static const CGFloat kSideOffset = 30.0;
@@ -64,7 +63,7 @@ static const CGSize  kMajorMarkSize = {1, 30};
     NSMutableArray *arrayWithTypeMarks = [NSMutableArray arrayWithCapacity:numberOfLines];
     NSNumberFormatter *textMarkFormater = [NSNumberFormatter new];
     textMarkFormater.numberStyle = NSNumberFormatterDecimalStyle;
-    textMarkFormater.maximumFractionDigits = 2;
+    textMarkFormater.maximumFractionDigits = 1;
     for (int i = 0; i <= numberOfLines; i++) {
         arrayWithTypeMarks[i] = self.minorMark;
         if ([NSNumber numberWithFloat:self.middleMark.frequency].integerValue != 0) {
@@ -79,7 +78,7 @@ static const CGSize  kMajorMarkSize = {1, 30};
         }
     }
     for (int i = 0; i <= numberOfLines; i++) {
-        CGFloat num = self.rulerRange.location + (self.minorMark.frequency * i);
+        CGFloat num = (self.rulerRange.location + (self.minorMark.frequency * i)) * 0.1;
         NSString * numStr = [textMarkFormater stringFromNumber:[NSNumber numberWithFloat:num]];
         CGFloat position = i * lineOffset;
         [self drawMarkInContext:ctx position:position text:numStr mark:arrayWithTypeMarks[i]];
@@ -98,7 +97,7 @@ static const CGSize  kMajorMarkSize = {1, 30};
     CGSize textSize = [text sizeWithAttributes:attributes];
     
     CGFloat rectX = position + kSideOffset - mark.size.width / 2 + mark.offset.x;
-    CGFloat rectY;
+    CGFloat rectY = 0.0;
     if (mark.alignment == CRRulerMarkAlignmentCenter) {
         rectY = (self.frame.size.height - mark.size.height) / 2;
     }
@@ -114,7 +113,7 @@ static const CGSize  kMajorMarkSize = {1, 30};
     CGContextFillRect(ctx, rect);
     
     CGFloat textRectX = position + kSideOffset - textSize.width / 2 + mark.textOffset.x;
-    CGFloat textRectY;
+    CGFloat textRectY = 0.0;
     if (mark.textAlignment == CRRulerMarkAlignmentCenter) {
         textRectY = (self.frame.size.height - textSize.height) / 2 ;
     }

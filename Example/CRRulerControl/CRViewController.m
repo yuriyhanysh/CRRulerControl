@@ -40,6 +40,23 @@
     self.editView.layer.shadowOpacity = 1;
     self.editView.layer.shadowRadius = 1.0;
     self.rulerView.pointerImageView.layer.cornerRadius = 2;
+    
+    self.rulerView.rangeFrom = 765;
+    self.rulerView.rangeLength = 315;
+    self.rulerView.rulerWidth = 3150;
+    [self.rulerView setValue: 765];
+    [self.rulerView setSize: CGSizeMake(1, 36) forMarkType: CRRulerMarkTypeMajor];
+    [self.rulerView setSize: CGSizeMake(1, 36) forMarkType: CRRulerMarkTypeMiddle];
+    [self.rulerView setSize: CGSizeMake(1, 18) forMarkType: CRRulerMarkTypeMinor];
+    [self.rulerView setColor: [UIColor colorWithWhite: 202.0 / 255.0 alpha: 1.0]
+                 forMarkType: CRRulerMarkTypeAll];
+    UIColor *textColor = [UIColor colorWithRed: 42.0 / 255.0
+                                         green: 45.0 / 255.0
+                                          blue: 52.0 / 255.0
+                                         alpha: 0.5];
+    [self.rulerView setTextColor: [UIColor clearColor] forMarkType: CRRulerMarkTypeMiddle];
+    [self.rulerView setTextColor: textColor forMarkType: CRRulerMarkTypeMajor];
+    self.rulerView.delegate = self;
 }
 
 - (UIImage *) createImageWithColor:(UIColor *)color {
@@ -101,6 +118,24 @@
 
 - (IBAction)barButtonItemTouchDown:(UIBarButtonItem *)sender {
     [self setEditing:!self.isEditing animated:YES];
+}
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"value = %f", self.rulerView.value);
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, self.rulerView.value * M_PI / 180, 0.0f, 1.0f, 0.0f);
+    self.imageView.layer.transform = rotationAndPerspectiveTransform;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"Stopped on value = %f", self.rulerView.value);
+    CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+    rotationAndPerspectiveTransform.m34 = 1.0 / -500;
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, self.rulerView.value * M_PI / 180, 0.0f, 1.0f, 0.0f);
+    self.imageView.layer.transform = rotationAndPerspectiveTransform;
 }
 
 @end

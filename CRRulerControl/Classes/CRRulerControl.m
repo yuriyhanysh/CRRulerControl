@@ -128,11 +128,8 @@ static const CGSize  kPointerImageViewSize = {2, 30};
 #pragma mark - ScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat oldValue = _value;
     _value = [self valueForContentOffset:scrollView.contentOffset];
-    if (oldValue != _value) {
-        [self sendActionsForControlEvents:UIControlEventValueChanged];
-    }
+    [self.delegate scrollViewDidScroll:scrollView];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
@@ -144,7 +141,7 @@ static const CGSize  kPointerImageViewSize = {2, 30};
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     CGFloat oldValue = [self valueForContentOffset:scrollView.contentOffset];
     _value = lroundf(oldValue / self.rulerLayer.minorMark.frequency) * self.rulerLayer.minorMark.frequency;
-    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    [self.delegate scrollViewDidEndDecelerating:scrollView];
 }
 
 #pragma mark - Helper for scroll

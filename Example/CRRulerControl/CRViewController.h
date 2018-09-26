@@ -7,7 +7,8 @@
 //  Copyright © 2016 Cleveroad Inc. All rights reserved.
 
 @import UIKit;
+@import CRRulerControl;
 
-@interface CRViewController : UIViewController
+@interface CRViewController : UIViewController <CRRulerControlDelegate>
 
 @end
