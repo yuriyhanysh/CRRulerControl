@@ -12,7 +12,7 @@ static const CGFloat kDefaultRulerWidth = 500;
 static const CGFloat kDefaultRangeFrom = -10;
 static const CGFloat kDefaultRangeLength = 20;
 static const CGFloat kSideOffset = 30.0;
-static const CGSize  kPointerImageViewSize = {2, 30};
+static const CGSize  kPointerImageViewSize = {10, 36};
 
 
 @interface CRRulerControl () <UIScrollViewDelegate>

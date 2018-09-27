@@ -122,19 +122,19 @@
 
 #pragma mark - ScrollView Delegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"value = %f", self.rulerView.value);
+- (void)rulerControl:(CRRulerControl *)rulerControl didScrollToValue:(CGFloat)value {
+    NSLog(@"value = %f", value);
     CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
     rotationAndPerspectiveTransform.m34 = 1.0 / -500;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, self.rulerView.value * M_PI / 180, 0.0f, 1.0f, 0.0f);
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, value * M_PI / 180, 0.0f, 1.0f, 0.0f);
     self.imageView.layer.transform = rotationAndPerspectiveTransform;
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"Stopped on value = %f", self.rulerView.value);
+- (void)rulerControl:(CRRulerControl *)rulerControl didStopAtValue:(CGFloat)value {
+    NSLog(@"value = %f", value);
     CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
     rotationAndPerspectiveTransform.m34 = 1.0 / -500;
-    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, self.rulerView.value * M_PI / 180, 0.0f, 1.0f, 0.0f);
+    rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, value * M_PI / 180, 0.0f, 1.0f, 0.0f);
     self.imageView.layer.transform = rotationAndPerspectiveTransform;
 }
 
