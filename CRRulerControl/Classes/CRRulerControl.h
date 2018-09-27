@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "CRRulerLayer.h"
 
-@protocol CRRulerControlDelegate<NSObject, UIScrollViewDelegate>
+@class CRRulerControl;
+
+@protocol CRRulerControlDelegate<NSObject>
+
+- (void)rulerControl:(CRRulerControl *)rulerControl didScrollToValue:(CGFloat)value;
+- (void)rulerControl:(CRRulerControl *)rulerControl didStopAtValue:(CGFloat)value;
 
 @end
 
