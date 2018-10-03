@@ -149,6 +149,16 @@ static const CGSize  kPointerImageViewSize = {10, 36};
     [self.delegate rulerControl:self didStopAtValue:_value];
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (decelerate) {
+        return;
+    }
+    CGFloat oldValue = [self valueForContentOffset:scrollView.contentOffset];
+    _value = lroundf(oldValue / self.rulerLayer.minorMark.frequency) * self.rulerLayer.minorMark.frequency;
+    [self sendActionsForControlEvents:UIControlEventValueChanged];
+    [self.delegate rulerControl:self didStopAtValue:_value];
+}
+
 #pragma mark - Helper for scroll
 
 - (CGPoint)contentOffsetForValue:(CGFloat)value {
