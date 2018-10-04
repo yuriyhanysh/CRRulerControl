@@ -130,9 +130,9 @@ static const CGSize  kPointerImageViewSize = {10, 36};
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat oldValue = _value;
     _value = [self valueForContentOffset:scrollView.contentOffset];
+    [self.delegate rulerControl:self didScrollToValue:_value];
     if (oldValue != _value) {
         [self sendActionsForControlEvents:UIControlEventValueChanged];
-        [self.delegate rulerControl:self didScrollToValue:_value];
     }
 }
 
